@@ -1,6 +1,6 @@
 package bsu.rfe.java.group7.lab1.Ovchinnikov.varA3;
 
-public abstract class Food implements Consumable {
+public class Food implements Consumable {
     String name = null;
 
     public Food(String name) {
@@ -23,5 +23,10 @@ public abstract class Food implements Consumable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public void consume() {
+        
     }
 }
