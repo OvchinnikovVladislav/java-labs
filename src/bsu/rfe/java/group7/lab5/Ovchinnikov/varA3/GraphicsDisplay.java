@@ -2,7 +2,12 @@ package bsu.rfe.java.group7.lab5.Ovchinnikov.varA3;
 
 
 
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
@@ -21,8 +26,6 @@ public class GraphicsDisplay extends JPanel {
     private ArrayList<Double[]> graphicsData;
     private ArrayList<Double[]> originalData;
     private int selectedMarker = -1;
-    private boolean showAxis = true;
-    private boolean showMarkers = true;
     private double minX;
     private double maxX;
     private double minY;
@@ -55,20 +58,7 @@ public class GraphicsDisplay extends JPanel {
         this.addMouseListener(new MouseHandler());
         this.addMouseMotionListener(new MouseMotionHandler());
     }
-    public void showGraphics(ArrayList<Double[]> graphicsData) {
-// Сохранить массив точек во внутреннем поле класса
-        this.graphicsData = graphicsData;
-// Запросить перерисовку компонента, т.е. неявно вызвать paintComponent()
-        repaint();
-    }
-    public void setShowAxis(boolean showAxis) {
-        this.showAxis = showAxis;
-        repaint();
-    }
-    public void setShowMarkers(boolean showMarkers) {
-        this.showMarkers = showMarkers;
-        repaint();
-    }
+
     public void displayGraphics(ArrayList<Double[]> graphicsData) {
         this.graphicsData = graphicsData;
         this.originalData = new ArrayList(graphicsData.size());
@@ -118,19 +108,7 @@ public class GraphicsDisplay extends JPanel {
             this.paintMarkers(canvas);
             this.paintLabels(canvas);
             this.paintSelection(canvas);
-            Stroke oldStroke = canvas.getStroke();
-            Color oldColor = canvas.getColor();
-            Paint oldPaint = canvas.getPaint();
-            Font oldFont = canvas.getFont();
-            if (showAxis) paintAxis(canvas);
-            paintGraphics(canvas);
-            if (showMarkers) paintMarkers(canvas);
-            canvas.setFont(oldFont);
-            canvas.setPaint(oldPaint);
-            canvas.setColor(oldColor);
-            canvas.setStroke(oldStroke);
         }
-
     }
 
     private void paintSelection(Graphics2D canvas) {
@@ -393,11 +371,10 @@ public class GraphicsDisplay extends JPanel {
             GraphicsDisplay.this.selectedMarker = GraphicsDisplay.this.findSelectedPoint(ev.getX(), ev.getY());
             if (GraphicsDisplay.this.selectedMarker >= 0) {
                 GraphicsDisplay.this.setCursor(Cursor.getPredefinedCursor(8));
-
             } else {
                 GraphicsDisplay.this.setCursor(Cursor.getPredefinedCursor(0));
             }
-            System.out.println("Мы подвигали мышкой");
+
             GraphicsDisplay.this.repaint();
         }
 
